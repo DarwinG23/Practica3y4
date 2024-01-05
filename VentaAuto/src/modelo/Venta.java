@@ -11,6 +11,7 @@ import java.util.Date;
  * @author darwi
  */
 public class Venta {
+
     private Integer id;
     private Date fecha;
     private Double comision;
@@ -26,8 +27,6 @@ public class Venta {
         this.total = total;
         this.id_Vendedor = id_Vendedor;
     }
-
-    
 
     public Venta() {
         this.id = null;
@@ -80,8 +79,8 @@ public class Venta {
 
     @Override
     public String toString() {
-        return "Venta: "+ id;
-    } 
+        return "Venta: " + id;
+    }
 
     public Integer getId_Vendedor() {
         return id_Vendedor;
@@ -90,9 +89,7 @@ public class Venta {
     public void setId_Vendedor(Integer id_Vendedor) {
         this.id_Vendedor = id_Vendedor;
     }
-    
-    
-    
+
     public Boolean compare(Venta a, String field, Integer type) {
         // 0 menor  1 mayor 2 igual
         switch (type) {
@@ -121,7 +118,7 @@ public class Venta {
                     return fecha.compareTo(a.getFecha()) > 0;
                 } else if (field.equalsIgnoreCase("id")) {
                     return id.intValue() > a.getId().intValue();
-                }else if (field.equalsIgnoreCase("id")) {
+                } else if (field.equalsIgnoreCase("id")) {
                     return id_Vendedor.intValue() > a.getId_Vendedor().intValue();
                 }
             case 2:
@@ -135,19 +132,18 @@ public class Venta {
                     return fecha.compareTo(a.getFecha()) == 0;
                 } else if (field.equalsIgnoreCase("id")) {
                     return id.intValue() == a.getId().intValue();
-                }else if (field.equalsIgnoreCase("id_Vendedor")) {
+                } else if (field.equalsIgnoreCase("id_Vendedor")) {
                     return id_Vendedor.intValue() == a.getId_Vendedor().intValue();
                 }
             default:
                 return null;
         }
     }
-    
+
     public Boolean buscar(String texto, String field, Integer tipo) {
         // 0 igual  1 menor
-        System.out.println("field" + field);
-        System.out.println("tipo" + tipo);
         field.toLowerCase();
+        texto.toLowerCase();
         switch (tipo) {
             case 0:
                 if (field.equalsIgnoreCase("comision")) {
@@ -161,6 +157,8 @@ public class Venta {
                     return totalString.toLowerCase().contains(texto.toLowerCase());
                 } else if (field.equalsIgnoreCase("fecha")) {
                     String fechaString = fecha.toString();
+                    System.out.println("texto: " + texto + " /" + fechaString);
+
                     return fechaString.toLowerCase().contains(texto.toLowerCase());
                 } else if (field.equalsIgnoreCase("id")) {
                     String idVenta = Integer.toString(id);
@@ -168,6 +166,26 @@ public class Venta {
                 } else if (field.equalsIgnoreCase("id_Vendedor")) {
                     String idVendedor = Integer.toString(id_Vendedor);
                     return idVendedor.toLowerCase().equalsIgnoreCase(texto.toLowerCase());
+                }
+            case 1:
+                if (field.equalsIgnoreCase("comision")) {
+                    String comisionString = Double.toString(comision);
+                    return (comisionString.toLowerCase().compareTo(texto.toLowerCase()) > 0);
+                } else if (field.equalsIgnoreCase("id_Auto")) {
+                    String idVenta = Integer.toString(id_Auto);
+                    return (idVenta.toLowerCase().compareTo(texto.toLowerCase()) > 0);
+                } else if (field.equalsIgnoreCase("total")) {
+                    String totalString = Double.toString(total);
+                    return (totalString.toLowerCase().compareTo(texto.toLowerCase()) > 0);
+                } else if (field.equalsIgnoreCase("fecha")) {
+                    String fechaString = fecha.toString();
+                    return (fechaString.toLowerCase().compareTo(texto.toLowerCase())) > 0;
+                } else if (field.equalsIgnoreCase("id")) {
+                    String idVenta = Integer.toString(id);
+                    return (idVenta.toLowerCase().compareTo(texto.toLowerCase()))> 0;
+                } else if (field.equalsIgnoreCase("id_Vendedor")) {
+                    String idVendedor = Integer.toString(id_Vendedor);
+                    return (idVendedor.toLowerCase().compareTo(texto.toLowerCase())) > 0;
                 }
             default:
                 return null;

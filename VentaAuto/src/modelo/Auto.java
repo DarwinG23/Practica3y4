@@ -124,11 +124,10 @@ public class Auto {
     
     public Boolean buscar(String texto, String field, Integer tipo) {
         // 0 igual  1 menor
-        field.toLowerCase();
         switch (tipo){
             case 0:
                 if (field.equalsIgnoreCase("marca")) {
-                    return marca.contains(texto);
+                    return marca.toLowerCase().contains(texto.toLowerCase());
                 } else if (field.equalsIgnoreCase("color")) {
                     return color.toLowerCase().contains(texto.toLowerCase());
                 } else if (field.equalsIgnoreCase("estado")) {
@@ -138,27 +137,23 @@ public class Auto {
                     return precioAuto.toLowerCase().contains(texto.toLowerCase());
                 } else if (field.equalsIgnoreCase("id")) {
                     String idAuto = Integer.toString(id);
-                    return idAuto.toLowerCase().contains(texto.toLowerCase());
+                    return idAuto.toLowerCase().equalsIgnoreCase(texto.toLowerCase());
                 } else {
                     return false;
                 }
             case 1:
                 if (field.equalsIgnoreCase("marca")) {
-                    return marca.toLowerCase().compareTo(texto.toLowerCase()) > 0;
+                    return (marca.toLowerCase().compareTo(texto.toLowerCase())) > 0;
                 } else if (field.equalsIgnoreCase("color")) {
-                    System.out.println(color);
-                    System.out.println(texto);
-                    return color.toLowerCase().compareTo(texto.toLowerCase()) > 0;
+                    return (color.toLowerCase().compareTo(texto.toLowerCase())) > 0;
                 } else if (field.equalsIgnoreCase("estado")) {
-                    return estado.toLowerCase().compareTo(texto.toLowerCase()) > 0;
+                    return (estado.toLowerCase().compareTo(texto.toLowerCase())) > 0;
                 } else if (field.equalsIgnoreCase("precio")) {
                     String precioAuto = Double.toString(precio);
-                    return precioAuto.toLowerCase().compareTo(texto.toLowerCase()) > 0;
+                    return (precioAuto.toLowerCase().compareTo(texto.toLowerCase())) > 0;
                 } else if (field.equalsIgnoreCase("id")) {
                     String idAuto = Integer.toString(id);
-                    return idAuto.toLowerCase().compareTo(texto.toLowerCase()) > 0;
-                } else {
-                    return false;
+                    return (idAuto.toLowerCase().compareTo(texto.toLowerCase())) > 0;
                 }           
             default:
                 return null;

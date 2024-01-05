@@ -99,4 +99,30 @@ public class VentaControl extends DaoImplement<Venta> {
         return lista;
     }
     
+     public DynamicList<Venta> busquedaBinaria(DynamicList<Venta> ventas, String texto, String field){
+        int centro, primero, ultimo;
+        DynamicList<Venta> lista = new DynamicList<>();
+        Venta[] array = shell(ventas, field, 0).toArray();
+        Venta valorCentro;
+        primero = 0;
+        ultimo =  array.length - 1;
+        while(primero <= ultimo){
+            centro = (primero + ultimo) / 2;
+            valorCentro = array[centro];
+            if(valorCentro.buscar(texto, field, 0)){
+                lista.add(valorCentro);
+                lista.toString();
+            }
+            if (valorCentro.buscar(texto, field, 1)){
+                ultimo = centro - 1; //Desplaza a la izquierda
+            }else{
+                primero = centro + 1; //Desplaza a la derecha
+            }
+            
+        }
+        return lista;    
+    }
+    
+  
+    
 }

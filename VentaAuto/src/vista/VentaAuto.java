@@ -21,15 +21,15 @@ import vista.tablas.ModeloTablaVenta;
  * @author darwi
  */
 public class VentaAuto extends javax.swing.JFrame {
-    
+
     private ModeloTablaAuto mta = new ModeloTablaAuto();
     private ModeloTablaVendedor mtv = new ModeloTablaVendedor();
     private ModeloTablaVenta mtv2 = new ModeloTablaVenta();
-    
+
     private AutoControl autoControl = new AutoControl();
     private VendedorControl vendedorControl = new VendedorControl();
     private VentaControl ventaControl = new VentaControl();
-    
+
     private void ordenarAuto() throws Exception {
         String criterio = cbxCritAuto.getSelectedItem().toString();
         Integer tipo = 0;
@@ -44,6 +44,7 @@ public class VentaAuto extends javax.swing.JFrame {
             JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     private void ordenarVendedor() throws Exception {
         String criterio = cbxCritVendedor.getSelectedItem().toString();
         Integer tipo = 0;
@@ -58,7 +59,7 @@ public class VentaAuto extends javax.swing.JFrame {
             JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void ordenarVeta() throws Exception {
         String criterio = cbxCritVenta.getSelectedItem().toString();
         Integer tipo = 0;
@@ -73,12 +74,12 @@ public class VentaAuto extends javax.swing.JFrame {
             JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    private void buscarAuto() {
+
+    private void buscarAutoBinario() {
         String texto = txtTextoAuto.getText();
         String criterio = cbxCritBuscarAuto.getSelectedItem().toString();
         try {
-            mta.setAutos(autoControl.busquedaBinaria(autoControl.getListAuto(),texto, criterio));
+            mta.setAutos(autoControl.busquedaBinaria(autoControl.getListAuto(), texto, criterio));
             tbAuto.setModel(mta);
             tbAuto.updateUI();
         } catch (Exception ex) {
@@ -86,7 +87,19 @@ public class VentaAuto extends javax.swing.JFrame {
         }
     }
     
-    private void buscarVendedor() {
+    private void buscarAutoLineal() {
+        String texto = txtTextoAuto.getText();
+        String criterio = cbxCritBuscarAuto.getSelectedItem().toString();
+        try {
+            mta.setAutos(autoControl.busquedaLineal(texto, autoControl.getListAuto(), criterio));
+            tbAuto.setModel(mta);
+            tbAuto.updateUI();
+        } catch (Exception ex) {
+            JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void buscarVendedorLienal() {
         String texto = txtTextoVendedor.getText();
         String criterio = cbxBuscarVendedor.getSelectedItem().toString();
         try {
@@ -96,10 +109,36 @@ public class VentaAuto extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }
     
-    private void buscarVenta() {
+    private void buscarVendedorBinario() {
+        String texto = txtTextoVendedor.getText();
+        String criterio = cbxBuscarVendedor.getSelectedItem().toString();
+        try {
+            mtv.setVendedores(vendedorControl.busquedaBinaria(vendedorControl.getListVendedor(),texto , criterio));
+            tbVendedor.setModel(mtv);
+            tbVendedor.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void buscarVentaBinaria() {
+        String texto = txtVenta.getText();
+        String criterio = cbxBuscarVenta.getSelectedItem().toString();
+        try {
+            mtv2.setVentas(ventaControl.busquedaBinaria(ventaControl.getListVenta(), texto, criterio));
+            tbVenta.setModel(mtv2);
+            tbVenta.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+    
+    private void buscarVentaLienal() {
         String texto = txtVenta.getText();
         String criterio = cbxBuscarVenta.getSelectedItem().toString();
         try {
@@ -112,32 +151,31 @@ public class VentaAuto extends javax.swing.JFrame {
 
     }
     
-    
-    
-    public void cargarAutos(DynamicList autos){
+
+    public void cargarAutos(DynamicList autos) {
         mta.setAutos(autos);
         initComponents();
     }
-    
-    public void cargarVendedores(DynamicList vendedores){
+
+    public void cargarVendedores(DynamicList vendedores) {
         mtv.setVendedores(vendedores);
         initComponents();
     }
-    
-    public void cargarVentas(DynamicList ventas){
+
+    public void cargarVentas(DynamicList ventas) {
         mtv2.setVentas(ventas);
         initComponents();
     }
-    
-    public void cargarTabla(){
+
+    public void cargarTabla() {
         mta.setAutos(autoControl.getListAuto());
         mtv.setVendedores(vendedorControl.getListVendedor());
         mtv2.setVentas(ventaControl.getListVenta());
-        
+
         tbVendedor.setModel(mtv);
         tbAuto.setModel(mta);
         tbVenta.setModel(mtv2);
-        
+
         tbVendedor.updateUI();
         tbVenta.updateUI();
         tbAuto.updateUI();
@@ -174,6 +212,7 @@ public class VentaAuto extends javax.swing.JFrame {
         cbxCritBuscarAuto = new javax.swing.JComboBox<>();
         btnBuscarAuto = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        btnBuscarAutoLineal = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbVendedor = new javax.swing.JTable();
@@ -186,8 +225,9 @@ public class VentaAuto extends javax.swing.JFrame {
         cbxBuscarVendedor = new javax.swing.JComboBox<>();
         txtTextoVendedor = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        btnBuscarVendedor = new javax.swing.JButton();
+        btnBuscarVendedorLineal = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        btnBuscarVendedorBinario = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbVenta = new javax.swing.JTable();
@@ -201,7 +241,8 @@ public class VentaAuto extends javax.swing.JFrame {
         txtVenta = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         cbxBuscarVenta = new javax.swing.JComboBox<>();
-        btnBuscarVenta = new javax.swing.JButton();
+        btnBuscarVentaLineal = new javax.swing.JButton();
+        btnBuscarVentaBinaria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -295,7 +336,7 @@ public class VentaAuto extends javax.swing.JFrame {
 
         cbxCritBuscarAuto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "PRECIO", "MARCA", "COLOR" }));
 
-        btnBuscarAuto.setText("Buscar");
+        btnBuscarAuto.setText("Buscar Binaria");
         btnBuscarAuto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarAutoActionPerformed(evt);
@@ -307,43 +348,52 @@ public class VentaAuto extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Buscar por:");
 
+        btnBuscarAutoLineal.setText("Busacar Lineal");
+        btnBuscarAutoLineal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarAutoLinealActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbxCritAuto, 0, 120, Short.MAX_VALUE)
-                            .addComponent(txtTextoAuto))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(btnTipoAuto)
-                                .addGap(27, 27, 27)
-                                .addComponent(btnOrdenarAuto)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAgregarAuto))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxCritBuscarAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnBuscarAuto)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxCritAuto, 0, 120, Short.MAX_VALUE)
+                                    .addComponent(txtTextoAuto))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(btnTipoAuto)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(btnOrdenarAuto)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAgregarAuto)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbxCritBuscarAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnBuscarAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnBuscarAutoLineal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(jLabel4))))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,14 +407,20 @@ public class VentaAuto extends javax.swing.JFrame {
                     .addComponent(btnOrdenarAuto)
                     .addComponent(btnTipoAuto)
                     .addComponent(btnAgregarAuto))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTextoAuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(cbxCritBuscarAuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarAuto)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTextoAuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(cbxCritBuscarAuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(btnBuscarAuto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarAutoLineal)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -424,10 +480,10 @@ public class VentaAuto extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Buscar por:");
 
-        btnBuscarVendedor.setText("Buscar");
-        btnBuscarVendedor.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarVendedorLineal.setText("Busqueda Lineal");
+        btnBuscarVendedorLineal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarVendedorActionPerformed(evt);
+                btnBuscarVendedorLinealActionPerformed(evt);
             }
         });
 
@@ -436,6 +492,13 @@ public class VentaAuto extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Texto:");
 
+        btnBuscarVendedorBinario.setText("Busqueda Binaria");
+        btnBuscarVendedorBinario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarVendedorBinarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -443,7 +506,7 @@ public class VentaAuto extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -466,9 +529,11 @@ public class VentaAuto extends javax.swing.JFrame {
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(cbxBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnBuscarVendedor)))))
-                        .addContainerGap(50, Short.MAX_VALUE))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnBuscarVendedorLineal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnBuscarVendedorBinario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addGap(12, 12, 12))))
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
                     .addGap(22, 22, 22)
@@ -487,13 +552,19 @@ public class VentaAuto extends javax.swing.JFrame {
                     .addComponent(btnTipoVendedor)
                     .addComponent(btnAgregarVendedor)
                     .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTextoVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(cbxBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarVendedor))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTextoVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(cbxBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btnBuscarVendedorLineal)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(btnBuscarVendedorBinario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -567,10 +638,17 @@ public class VentaAuto extends javax.swing.JFrame {
 
         cbxBuscarVenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FECHA", "ID_VENDEDOR", "ID_AUTO", "ID" }));
 
-        btnBuscarVenta.setText("Buscar");
-        btnBuscarVenta.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarVentaLineal.setText("Busqueda Lienal");
+        btnBuscarVentaLineal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarVentaActionPerformed(evt);
+                btnBuscarVentaLinealActionPerformed(evt);
+            }
+        });
+
+        btnBuscarVentaBinaria.setText("Busqueda Binaria");
+        btnBuscarVentaBinaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarVentaBinariaActionPerformed(evt);
             }
         });
 
@@ -581,49 +659,62 @@ public class VentaAuto extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jLabel6)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxCritVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnOrdenarVenta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAgregarVenta)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarVenta)))
-                .addContainerGap())
+                        .addComponent(jScrollPane3)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxCritVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCheckBox3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnOrdenarVenta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAgregarVenta)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addGap(12, 12, 12)
+                                .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBuscarVentaBinaria, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                            .addComponent(btnBuscarVentaLineal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18))))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cbxCritVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOrdenarVenta)
-                    .addComponent(btnAgregarVenta)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jLabel7)
-                    .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(cbxBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarVenta))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(btnBuscarVentaBinaria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(cbxCritVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnOrdenarVenta)
+                            .addComponent(btnAgregarVenta)
+                            .addComponent(jCheckBox3)
+                            .addComponent(cbxBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarVentaLineal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -638,9 +729,9 @@ public class VentaAuto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -659,7 +750,9 @@ public class VentaAuto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -678,7 +771,7 @@ public class VentaAuto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTipoVendedorActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        
+
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void btnAgregarAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutoActionPerformed
@@ -694,7 +787,7 @@ public class VentaAuto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
     private void btnAgregarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVendedorActionPerformed
-       new GuardarVendedor().setVisible(true);
+        new GuardarVendedor().setVisible(true);
     }//GEN-LAST:event_btnAgregarVendedorActionPerformed
 
     private void btnOrdenarAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarAutoActionPerformed
@@ -722,21 +815,33 @@ public class VentaAuto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOrdenarVentaActionPerformed
 
     private void btnBuscarAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAutoActionPerformed
-        buscarAuto();
+        buscarAutoBinario();
     }//GEN-LAST:event_btnBuscarAutoActionPerformed
 
-    private void btnBuscarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVendedorActionPerformed
-        buscarVendedor();
-    }//GEN-LAST:event_btnBuscarVendedorActionPerformed
+    private void btnBuscarVendedorLinealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVendedorLinealActionPerformed
+        buscarVendedorLienal();
+    }//GEN-LAST:event_btnBuscarVendedorLinealActionPerformed
 
-    private void btnBuscarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVentaActionPerformed
-        buscarVenta();
-    }//GEN-LAST:event_btnBuscarVentaActionPerformed
+    private void btnBuscarVentaLinealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVentaLinealActionPerformed
+        buscarVentaLienal();
+    }//GEN-LAST:event_btnBuscarVentaLinealActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         this.dispose();
         new VentaAuto().setVisible(true);
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnBuscarVentaBinariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVentaBinariaActionPerformed
+        buscarVentaBinaria();
+    }//GEN-LAST:event_btnBuscarVentaBinariaActionPerformed
+
+    private void btnBuscarVendedorBinarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVendedorBinarioActionPerformed
+        buscarVendedorBinario();
+    }//GEN-LAST:event_btnBuscarVendedorBinarioActionPerformed
+
+    private void btnBuscarAutoLinealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAutoLinealActionPerformed
+        buscarAutoLineal();
+    }//GEN-LAST:event_btnBuscarAutoLinealActionPerformed
 
     /**
      * @param args the command line arguments
@@ -779,8 +884,11 @@ public class VentaAuto extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarVendedor;
     private javax.swing.JButton btnAgregarVenta;
     private javax.swing.JButton btnBuscarAuto;
-    private javax.swing.JButton btnBuscarVendedor;
-    private javax.swing.JButton btnBuscarVenta;
+    private javax.swing.JButton btnBuscarAutoLineal;
+    private javax.swing.JButton btnBuscarVendedorBinario;
+    private javax.swing.JButton btnBuscarVendedorLineal;
+    private javax.swing.JButton btnBuscarVentaBinaria;
+    private javax.swing.JButton btnBuscarVentaLineal;
     private javax.swing.JButton btnOrdenarAuto;
     private javax.swing.JButton btnOrdenarVendedor;
     private javax.swing.JButton btnOrdenarVenta;

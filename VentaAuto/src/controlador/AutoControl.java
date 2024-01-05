@@ -128,9 +128,25 @@ public class AutoControl extends DaoImplement<Auto> {
                 ultimo = centro - 1; //Desplaza a la izquierda
             }else{
                 primero = centro + 1; //Desplaza a la derecha
-            }
-            
+            }   
         }
         return lista;    
+    }
+    
+    
+    public DynamicList<Auto> busquedaLineal (String texto, DynamicList<Auto> vendedores, String field) {
+        DynamicList<Auto> lista = new DynamicList<>();
+        try {
+            Auto[] aux = ordenar(vendedores,field, 0).toArray();
+            for (Auto v : aux) {
+                if (v.buscar(texto, field, 0)) {
+                    lista.add(v);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al buscar");
+        }
+        return lista;
     }
 }

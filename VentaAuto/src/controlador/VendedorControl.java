@@ -100,4 +100,28 @@ public class VendedorControl extends DaoImplement<Vendedor>{
         return lista;
     }
     
+    
+    public DynamicList<Vendedor> busquedaBinaria(DynamicList<Vendedor> vendedor, String texto, String field){
+        int centro, primero, ultimo;
+        DynamicList<Vendedor> lista = new DynamicList<>();
+        Vendedor[] array = shell(vendedor, field, 0).toArray();
+        Vendedor valorCentro;
+        primero = 0;
+        ultimo =  array.length - 1;
+        while(primero <= ultimo){
+            centro = (primero + ultimo) / 2;
+            valorCentro = array[centro];
+            if(valorCentro.buscar(texto, field, 0)){
+                lista.add(valorCentro);
+            }
+            if (valorCentro.buscar(texto, field, 1)){
+                ultimo = centro - 1; //Desplaza a la izquierda
+            }else{
+                primero = centro + 1; //Desplaza a la derecha
+            }
+            
+        }
+        return lista;    
+    }
+    
 }
