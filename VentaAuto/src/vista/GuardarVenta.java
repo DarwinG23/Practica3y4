@@ -42,8 +42,6 @@ public class GuardarVenta extends javax.swing.JFrame {
             modificarEstadoAuto(UtilVistaAuto.obtenerAuto(cbxAuto));
             if (ventaControl.persist()) {
                 JOptionPane.showMessageDialog(null, "Datos guardados");
-                new VentaAuto().setVisible(true);
-                new VentaAuto().cargarTabla();
                 limpiar();
                 ventaControl.setVenta(null);
             } else {

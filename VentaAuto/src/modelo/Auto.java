@@ -124,8 +124,6 @@ public class Auto {
     
     public Boolean buscar(String texto, String field, Integer tipo) {
         // 0 igual  1 menor
-        System.out.println("field" + field);
-        System.out.println("tipo" + tipo);
         field.toLowerCase();
         switch (tipo){
             case 0:

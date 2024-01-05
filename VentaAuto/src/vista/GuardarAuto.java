@@ -32,8 +32,6 @@ public class GuardarAuto extends javax.swing.JFrame {
             autoControl.getAuto().setEstado("DISPONIBLE");
             if (autoControl.persist()) {
                 JOptionPane.showMessageDialog(null, "Datos guardados");
-                new VentaAuto().setVisible(true);
-                new VentaAuto().cargarTabla();
                 limpiar();
                 autoControl.setAuto(null);
             } else {

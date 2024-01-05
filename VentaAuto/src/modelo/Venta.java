@@ -167,7 +167,7 @@ public class Venta {
                     return idVenta.toLowerCase().contains(texto.toLowerCase());
                 } else if (field.equalsIgnoreCase("id_Vendedor")) {
                     String idVendedor = Integer.toString(id_Vendedor);
-                    return idVendedor.toLowerCase().contains(texto.toLowerCase());
+                    return idVendedor.toLowerCase().equalsIgnoreCase(texto.toLowerCase());
                 }
             default:
                 return null;

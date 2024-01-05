@@ -35,8 +35,6 @@ public class GuardarVendedor extends javax.swing.JFrame {
             vendedorControl.getVendedor().setCelular(txtCelular.getText());
             if (vendedorControl.persist()) {
                 JOptionPane.showMessageDialog(null, "Datos guardados");
-                new VentaAuto().setVisible(true);
-                new VentaAuto().cargarTabla();
                 limpiar();
                 vendedorControl.setVendedor(null);
             } else {
