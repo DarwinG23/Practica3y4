@@ -37,9 +37,13 @@ public class VentaAuto extends javax.swing.JFrame {
             tipo = 1;
         }
         try {
+            long tiempoInicio = System.nanoTime();
             mta.setAutos(autoControl.ordenar(autoControl.getListAuto(), criterio, tipo));
+            long tiempoFin = System.nanoTime();
             tbAuto.setModel(mta);
             tbAuto.updateUI();
+            long tiempoTotal = tiempoFin - tiempoInicio;
+            JOptionPane.showMessageDialog(rootPane, "Se ordenó correctamente, tiempo de ejecución: " + tiempoTotal + " milisegundos", "Detalle", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showConfirmDialog(rootPane, "Error al ordenar", "NO SE PUDO ORDEAR", JOptionPane.ERROR_MESSAGE);
         }
@@ -52,7 +56,11 @@ public class VentaAuto extends javax.swing.JFrame {
             tipo = 1;
         }
         try {
+            long tiempoInicio = System.nanoTime();
             mtv.setVendedores(vendedorControl.shell(vendedorControl.getListVendedor(), criterio, tipo));
+            long tiempoFin = System.nanoTime();
+            long tiempoTotal = tiempoFin - tiempoInicio;
+            JOptionPane.showMessageDialog(rootPane, "Se ordenó correctamente, tiempo de ejecución: " + tiempoTotal + " milisegundos", "Detalle", JOptionPane.INFORMATION_MESSAGE);
             tbVendedor.setModel(mtv);
             tbVendedor.updateUI();
         } catch (Exception ex) {
@@ -67,7 +75,11 @@ public class VentaAuto extends javax.swing.JFrame {
             tipo = 1;
         }
         try {
+            long tiempoInicio = System.nanoTime();
             mtv2.setVentas(ventaControl.shell(ventaControl.getListVenta(), criterio, tipo));
+            long tiempoFin = System.nanoTime();
+            long tiempoTotal = tiempoFin - tiempoInicio;
+            JOptionPane.showMessageDialog(rootPane, "Se ordenó correctamente, tiempo de ejecución: " + tiempoTotal + " milisegundos", "Detalle", JOptionPane.INFORMATION_MESSAGE);
             tbVenta.setModel(mtv2);
             tbVenta.updateUI();
         } catch (Exception ex) {
